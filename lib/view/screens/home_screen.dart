@@ -11,14 +11,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => StoreAppCubit(),
-      child: BlocConsumer<StoreAppCubit, StoreAppStates>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          StoreAppCubit cubit = StoreAppCubit();
-          print(cubit.allProduct);
-          return Scaffold(
+    return BlocConsumer<StoreAppCubit, StoreAppStates>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        StoreAppCubit cubit = StoreAppCubit.get(context);
+        return Scaffold(
             appBar: AppBar(
               elevation: 0,
               actions: [
@@ -43,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                 ? Padding(
                     padding: const EdgeInsets.all(10),
                     child: GridView.builder(
-                      itemCount: 2,
+                      itemCount: cubit.allProduct?.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -52,16 +49,17 @@ class HomeScreen extends StatelessWidget {
                         childAspectRatio: .95,
                       ),
                       itemBuilder: (context, index) {
-                        return CustomProductItem();
+                        return CustomProductItem(
+                          allProducts: StoreAppCubit.get(context).allProduct!,
+                          index: index,
+                        );
                       },
                     ),
                   )
                 : const Center(
                     child: CircularProgressIndicator(),
-                  ),
-          );
-        },
-      ),
+                  ));
+      },
     );
   }
 }

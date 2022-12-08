@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 
 class CustomProductItem extends StatelessWidget {
-  const CustomProductItem({
-    super.key,
-  });
+  final List<dynamic> allProducts;
+  final int index;
+  final void Function()? favorites;
+  final void Function()? add;
+  const CustomProductItem(
+      {super.key,
+      required this.allProducts,
+      required this.index,
+      this.favorites,
+      this.add});
 
   @override
   Widget build(BuildContext context) {
@@ -12,15 +19,20 @@ class CustomProductItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.network(
-            'https://d30l99xc13l2t1.cloudfront.net/media/catalog/product/cache/24068b64fbac9f2de6c79723b87209a3/B/4/B4290_100_1.JPG',
+            allProducts[index]['image'],
             height: 100,
             width: 100,
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
-          const Text('shoes'),
+          const Spacer(),
+          Text(
+            allProducts[index]['title'],
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
           Row(
             children: [
-              const Text(r'$225'),
+              Text('\$${allProducts[index]['price']}'),
               const Spacer(),
               IconButton(
                   onPressed: () {},
