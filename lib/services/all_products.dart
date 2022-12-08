@@ -3,10 +3,10 @@ import 'package:http/http.dart' as http;
 import 'package:store_app/core/links_app.dart';
 
 class AllProducts {
-  Future<List<Map<String, dynamic>>> getData() async {
+  Future<List<dynamic>> getData() async {
     http.Response response = await http.get(Uri.parse(AppLinks.getAllProducts));
     if (response.statusCode == 200 || response.statusCode == 201) {
-      List<Map<String, dynamic>> responsebody = jsonDecode(response.body);
+      List<dynamic> responsebody = jsonDecode(response.body);
       return responsebody;
     } else {
       throw Exception(
