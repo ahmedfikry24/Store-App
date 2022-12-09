@@ -11,7 +11,7 @@ class UpdateProduct {
       required String category,
       required int id}) async {
     http.Response response =
-        await http.post(Uri.parse('${AppLinks.getAllProducts}/$id'), body: {
+        await http.put(Uri.parse('${AppLinks.getAllProducts}/$id'), body: {
       "title": title,
       "price": price,
       "description": des,
