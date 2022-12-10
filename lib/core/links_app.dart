@@ -1,5 +1,9 @@
 class AppLinks {
-  static const String baseUrl = 'https://fakestoreapi.com/';
+  static const String baseUrl = 'https://student.valuxapps.com/api/';
+
+  static const String login = '${baseUrl}login';
+
+  static const String signup = '${baseUrl}register';
 
   static const String getAllProducts = '${baseUrl}products';
 
