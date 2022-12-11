@@ -1,9 +1,13 @@
-// ignore_for_file: unnecessary_type_check
+// ignore_for_file: unnecessary_type_check, use_build_context_synchronously
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:store_app/controller/login/states.dart';
 import 'package:store_app/core/crud.dart';
 import 'package:store_app/core/links_app.dart';
+import 'package:store_app/services/services.dart';
+import 'package:store_app/view/screens/home_screen.dart';
 
 class LoginCubit extends Cubit<LoginStates> {
   LoginCubit() : super(LoginInitilaState());
@@ -11,13 +15,19 @@ class LoginCubit extends Cubit<LoginStates> {
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   GlobalKey<FormState> signupGlobalKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
+  bool obscure = true;
   TextEditingController passwordController = TextEditingController();
   TextEditingController signupEmailController = TextEditingController();
   TextEditingController signupPasswordController = TextEditingController();
   TextEditingController signupNameController = TextEditingController();
   TextEditingController signupPhoneController = TextEditingController();
   Crud crud = Crud();
-  login() async {
+  changeOBST() {
+    obscure = !obscure;
+    emit(ChangeOBSTState());
+  }
+
+  login(BuildContext context) async {
     if (globalKey.currentState!.validate()) {
       emit(LoginLoadingState());
       var response = await crud.postData(AppLinks.login, {
@@ -26,16 +36,23 @@ class LoginCubit extends Cubit<LoginStates> {
       });
       if (response is Map<String, dynamic>) {
         if (response['status'] == true) {
+          await sharedPreferences!.setBool('homepage', true);
           emit(LoginSuccessState());
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                builder: (context) => const HomeScreen(),
+              ),
+              (route) => false);
+        } else {
+          emit(LoginErrorState());
         }
-        emit(LoginErrorState());
       } else {
         emit(LoginErrorState());
       }
     }
   }
 
-  sginUp() async {
+  sginUp(BuildContext context) async {
     if (signupGlobalKey.currentState!.validate()) {
       emit(SginUpLoadingState());
       var response = await crud.postData(AppLinks.signup, {
@@ -47,6 +64,7 @@ class LoginCubit extends Cubit<LoginStates> {
       if (response is Map<String, dynamic>) {
         if (response['status'] == true) {
           emit(SginUpSuccessState());
+          Navigator.of(context).pop();
         }
         emit(SginUpErrorState());
       } else {

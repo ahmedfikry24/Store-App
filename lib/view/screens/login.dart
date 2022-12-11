@@ -60,23 +60,29 @@ class Login extends StatelessWidget {
                       height: 15,
                     ),
                     CustomTextForm(
-                        hinttext: 'enter your password',
-                        labeltext: 'password',
-                        textInputType: TextInputType.visiblePassword,
-                        controller: cubit.passwordController,
-                        validator: (val) {
-                          if (val!.isEmpty) {
-                            return 'password required';
-                          }
-                          return null;
-                        }),
+                      hinttext: 'enter your password',
+                      labeltext: 'password',
+                      textInputType: TextInputType.visiblePassword,
+                      controller: cubit.passwordController,
+                      validator: (val) {
+                        if (val!.isEmpty) {
+                          return 'password required';
+                        }
+                        return null;
+                      },
+                      suffixicon: Icons.remove_red_eye,
+                      obscureText: cubit.obscure,
+                      onTap: () {
+                        cubit.changeOBST();
+                      },
+                    ),
                     const SizedBox(
                       height: 25,
                     ),
                     CustomloginBotton(
                         textbottom: 'login',
                         onpressed: () {
-                          cubit.login();
+                          cubit.login(context);
                         }),
                     const SizedBox(
                       height: 10,

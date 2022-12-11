@@ -8,6 +8,8 @@ class LoginSuccessState extends LoginStates {}
 
 class LoginErrorState extends LoginStates {}
 
+class ChangeOBSTState extends LoginStates {}
+
 class SginUpLoadingState extends LoginStates {}
 
 class SginUpSuccessState extends LoginStates {}

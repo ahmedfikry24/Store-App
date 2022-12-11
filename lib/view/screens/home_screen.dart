@@ -4,8 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:store_app/controller/cubit.dart';
 import 'package:store_app/controller/states.dart';
 import 'package:store_app/core/themes.dart';
-import 'package:store_app/view/screens/update_product.dart';
-import 'package:store_app/view/widgets/product_item.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,57 +15,36 @@ class HomeScreen extends StatelessWidget {
       builder: (context, state) {
         StoreAppCubit cubit = StoreAppCubit.get(context);
         return Scaffold(
-            appBar: AppBar(
-              elevation: 0,
-              actions: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        FontAwesomeIcons.cartShopping,
-                        color: Colors.black54,
-                      )),
-                )
-              ],
-              backgroundColor: Colors.white54,
-              centerTitle: true,
-              title: Text(
-                'New Trend',
-                style: TextStyle(color: AppTheme.primaryColor),
+          appBar: AppBar(
+            elevation: 0,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      FontAwesomeIcons.cartShopping,
+                      color: Colors.black54,
+                    )),
               ),
+            ],
+            backgroundColor: Colors.white54,
+            centerTitle: true,
+            title: Text(
+              cubit.titles[cubit.currentIndex],
+              style: TextStyle(color: AppTheme.primaryColor),
             ),
-            body: cubit.allProduct != null
-                ? InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const UpdateProductItem()));
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: GridView.builder(
-                        itemCount: cubit.allProduct?.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: .95,
-                        ),
-                        itemBuilder: (context, index) {
-                          return CustomProductItem(
-                            allProducts: cubit.allProduct!,
-                            index: index,
-                          );
-                        },
-                      ),
-                    ),
-                  )
-                : const Center(
-                    child: CircularProgressIndicator(),
-                  ));
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            items: cubit.items,
+            currentIndex: cubit.currentIndex,
+            elevation: 5,
+            onTap: (val) {
+              cubit.changeBNB(val);
+            },
+          ),
+          body: cubit.screens[cubit.currentIndex],
+        );
       },
     );
   }

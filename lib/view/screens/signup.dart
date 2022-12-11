@@ -88,23 +88,29 @@ class SignUpScreen extends StatelessWidget {
                       height: 15,
                     ),
                     CustomTextForm(
-                        hinttext: 'enter your password',
-                        labeltext: 'password',
-                        textInputType: TextInputType.visiblePassword,
-                        controller: cubit.signupPasswordController,
-                        validator: (val) {
-                          if (val!.isEmpty) {
-                            return 'password required';
-                          }
-                          return null;
-                        }),
+                      hinttext: 'enter your password',
+                      labeltext: 'password',
+                      textInputType: TextInputType.visiblePassword,
+                      controller: cubit.signupPasswordController,
+                      validator: (val) {
+                        if (val!.isEmpty) {
+                          return 'password required';
+                        }
+                        return null;
+                      },
+                      suffixicon: Icons.remove_red_eye,
+                      obscureText: cubit.obscure,
+                      onTap: () {
+                        cubit.changeOBST();
+                      },
+                    ),
                     const SizedBox(
                       height: 25,
                     ),
                     CustomloginBotton(
                         textbottom: 'sgin up',
                         onpressed: () {
-                          cubit.sginUp();
+                          cubit.sginUp(context);
                         }),
                     const SizedBox(
                       height: 10,

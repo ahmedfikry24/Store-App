@@ -7,3 +7,5 @@ class StoreAppGetAllProductLoadingState extends StoreAppStates {}
 class StoreAppGetAllProductSuccessState extends StoreAppStates {}
 
 class StoreAppGetAllProductErrorState extends StoreAppStates {}
+
+class StoreAppChangeBNBState extends StoreAppStates {}

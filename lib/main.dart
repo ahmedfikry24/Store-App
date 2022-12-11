@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/controller/cubit.dart';
 import 'package:store_app/controller/login/cubit.dart';
 import 'package:store_app/services/services.dart';
+import 'package:store_app/view/screens/home_screen.dart';
 import 'package:store_app/view/screens/login.dart';
 import 'package:store_app/view/screens/on_boarding.dart';
 
@@ -14,9 +15,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Services().getInit();
   Services.onboarding = await sharedPreferences!.getBool('onboarding');
+  Services.homepage = await sharedPreferences!.getBool('homepage');
   Widget widget = const OnBoardingScreen();
   if (Services.onboarding != null && Services.onboarding == true) {
-    widget = const Login();
+    if (Services.homepage != null && Services.homepage == true) {
+      widget = const HomeScreen();
+    } else {
+      widget = const Login();
+    }
   }
 
   Bloc.observer = MyBlocObserver();
@@ -37,7 +43,7 @@ class MyApp extends StatelessWidget {
           create: (context) => LoginCubit(),
         ),
         BlocProvider(
-          create: (context) => StoreAppCubit()..getAllProduct(),
+          create: (context) => StoreAppCubit(),
         ),
       ],
       child: MaterialApp(
