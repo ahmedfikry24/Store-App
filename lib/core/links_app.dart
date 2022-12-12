@@ -5,7 +5,7 @@ class AppLinks {
 
   static const String signup = '${baseUrl}register';
 
-  static const String getAllProducts = '${baseUrl}products';
+  static const String getAllProducts = '${baseUrl}home';
 
   static const String getAllCategories = '${baseUrl}products/categories';
 

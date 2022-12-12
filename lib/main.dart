@@ -16,6 +16,8 @@ void main() async {
   await Services().getInit();
   Services.onboarding = await sharedPreferences!.getBool('onboarding');
   Services.homepage = await sharedPreferences!.getBool('homepage');
+  Services.email = await sharedPreferences!.getString('email');
+  Services.token = await sharedPreferences!.getString('token');
   Widget widget = const OnBoardingScreen();
   if (Services.onboarding != null && Services.onboarding == true) {
     if (Services.homepage != null && Services.homepage == true) {
@@ -43,7 +45,7 @@ class MyApp extends StatelessWidget {
           create: (context) => LoginCubit(),
         ),
         BlocProvider(
-          create: (context) => StoreAppCubit(),
+          create: (context) => StoreAppCubit()..getAllProduct(),
         ),
       ],
       child: MaterialApp(

@@ -37,6 +37,10 @@ class LoginCubit extends Cubit<LoginStates> {
       if (response is Map<String, dynamic>) {
         if (response['status'] == true) {
           await sharedPreferences!.setBool('homepage', true);
+          await sharedPreferences!
+              .setString('email', response['data']['email']);
+          await sharedPreferences!
+              .setString('token', response['data']['token']);
           emit(LoginSuccessState());
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
