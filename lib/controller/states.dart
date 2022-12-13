@@ -9,3 +9,9 @@ class StoreAppGetAllProductSuccessState extends StoreAppStates {}
 class StoreAppGetAllProductErrorState extends StoreAppStates {}
 
 class StoreAppChangeBNBState extends StoreAppStates {}
+
+class StoreAppGetCategoriesLoadingState extends StoreAppStates {}
+
+class StoreAppGetCategoriesSuccessState extends StoreAppStates {}
+
+class StoreAppGetCategoriesErrorState extends StoreAppStates {}

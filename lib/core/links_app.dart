@@ -7,7 +7,7 @@ class AppLinks {
 
   static const String getAllProducts = '${baseUrl}home';
 
-  static const String getAllCategories = '${baseUrl}products/categories';
+  static const String getAllCategories = '${baseUrl}categories';
 
   static const String getAllProductsByCategory =
       '${baseUrl}products/categories/';
