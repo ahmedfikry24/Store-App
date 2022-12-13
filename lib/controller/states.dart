@@ -27,3 +27,15 @@ class StoreAppGetFavoritesLoadingState extends StoreAppStates {}
 class StoreAppGetFavoritesSuccessState extends StoreAppStates {}
 
 class StoreAppGetFavoritesErrorState extends StoreAppStates {}
+
+class StoreAppGetUserInfoLoadingState extends StoreAppStates {}
+
+class StoreAppGetUserInfoSuccessState extends StoreAppStates {}
+
+class StoreAppGetUserInfoErrorState extends StoreAppStates {}
+
+class StoreAppUpdateProfileLoadingState extends StoreAppStates {}
+
+class StoreAppUpdateProfileSuccessState extends StoreAppStates {}
+
+class StoreAppUpdateProfileErrorState extends StoreAppStates {}

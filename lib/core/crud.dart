@@ -39,4 +39,20 @@ class Crud {
           'there are an exciption status code : ${response.statusCode} and body : ${response.body}');
     }
   }
+
+  putData(
+      {required String url, required Map data, required String token}) async {
+    http.Response response =
+        await http.put(Uri.parse(url), body: data, headers: {
+      'lang': 'en',
+      'Authorization': token,
+    });
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      Map<String, dynamic> responsebody = jsonDecode(response.body);
+      return responsebody;
+    } else {
+      throw Exception(
+          'there are an exciption status code : ${response.statusCode} and body : ${response.body}');
+    }
+  }
 }

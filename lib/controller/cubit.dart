@@ -19,8 +19,14 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
   Map<String, dynamic>? allCategories;
   Map<String, dynamic>? addfavorites;
   Map<String, dynamic>? getfavorites;
+  Map<String, dynamic>? getuserinfo;
   Map<int, bool> isfavorite = {};
   int currentIndex = 0;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   List<BottomNavigationBarItem> items = [
     const BottomNavigationBarItem(
       icon: Icon(FontAwesomeIcons.house),
@@ -123,6 +129,48 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
       }
     } else {
       emit(StoreAppGetFavoritesErrorState());
+    }
+  }
+
+  getUserInfo() async {
+    emit(StoreAppGetUserInfoLoadingState());
+    var response =
+        await crud.getData(url: AppLinks.getuserinfo, token: Services.token);
+    if (response is Map<String, dynamic>) {
+      if (response['status'] == true) {
+        getuserinfo = response;
+        emit(StoreAppGetUserInfoSuccessState());
+      } else {
+        emit(StoreAppGetUserInfoErrorState());
+      }
+    } else {
+      emit(StoreAppGetUserInfoErrorState());
+    }
+  }
+
+  updateProfile() async {
+    if (globalKey.currentState!.validate()) {
+      emit(StoreAppUpdateProfileLoadingState());
+      var response = await crud.putData(
+        url: AppLinks.updateprofile,
+        token: Services.token!,
+        data: {
+          'name': nameController.text,
+          'email': emailController.text,
+          'phone': phoneController.text,
+          'password': passwordController.text,
+        },
+      );
+      if (response is Map<String, dynamic>) {
+        if (response['status'] == true) {
+          emit(StoreAppUpdateProfileSuccessState());
+          getUserInfo();
+        } else {
+          emit(StoreAppUpdateProfileErrorState());
+        }
+      } else {
+        emit(StoreAppUpdateProfileErrorState());
+      }
     }
   }
 }

@@ -1,8 +1,6 @@
 // ignore_for_file: unnecessary_type_check, use_build_context_synchronously
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:store_app/controller/login/states.dart';
 import 'package:store_app/core/crud.dart';
 import 'package:store_app/core/links_app.dart';
@@ -41,6 +39,7 @@ class LoginCubit extends Cubit<LoginStates> {
               .setString('email', response['data']['email']);
           await sharedPreferences!
               .setString('token', response['data']['token']);
+          Services.token = response['data']['token'];
           emit(LoginSuccessState());
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(

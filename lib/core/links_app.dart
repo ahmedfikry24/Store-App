@@ -10,4 +10,8 @@ class AppLinks {
   static const String getAllCategories = '${baseUrl}categories';
 
   static const String addFavorites = '${baseUrl}favorites';
+
+  static const String getuserinfo = '${baseUrl}profile';
+
+  static const String updateprofile = '${baseUrl}update-profile';
 }

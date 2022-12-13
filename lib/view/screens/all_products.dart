@@ -19,9 +19,13 @@ class AllProductsScreen extends StatelessWidget {
                 children: [
                   CarouselSlider.builder(
                     itemCount: cubit.allProduct?['data']['banners'].length,
-                    itemBuilder: (context, index, realIndex) => Image.network(
-                      cubit.allProduct?['data']['banners'][index]['image'],
-                      fit: BoxFit.fill,
+                    itemBuilder: (context, index, realIndex) => ClipRRect(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.network(
+                        cubit.allProduct?['data']['banners'][index]['image'],
+                        fit: BoxFit.fill,
+                      ),
                     ),
                     options: CarouselOptions(
                       autoPlay: true,
