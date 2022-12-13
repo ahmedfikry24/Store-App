@@ -30,7 +30,7 @@ class LoginCubit extends Cubit<LoginStates> {
   login(BuildContext context) async {
     if (globalKey.currentState!.validate()) {
       emit(LoginLoadingState());
-      var response = await crud.postData(AppLinks.login, {
+      var response = await crud.postData(url: AppLinks.login, data: {
         "email": emailController.text,
         "password": passwordController.text,
       });
@@ -59,7 +59,7 @@ class LoginCubit extends Cubit<LoginStates> {
   sginUp(BuildContext context) async {
     if (signupGlobalKey.currentState!.validate()) {
       emit(SginUpLoadingState());
-      var response = await crud.postData(AppLinks.signup, {
+      var response = await crud.postData(url: AppLinks.signup, data: {
         "email": signupEmailController.text,
         "password": signupPasswordController.text,
         "name": signupNameController.text,

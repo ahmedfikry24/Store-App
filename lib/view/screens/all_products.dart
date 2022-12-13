@@ -39,11 +39,11 @@ class AllProductsScreen extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(
                         vertical: 15, horizontal: 15),
                     child: Text(
-                      'New Products :',
+                      'New Products ',
                       style: Theme.of(context).textTheme.bodyText2?.copyWith(
                             color: Colors.black87,
                             fontSize: 24,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w700,
                           ),
                     ),
                   ),
@@ -63,6 +63,17 @@ class AllProductsScreen extends StatelessWidget {
                         return CustomProductItem(
                           allProducts: cubit.allProduct!,
                           index: index,
+                          favorites: () {
+                            cubit.addFavorites(
+                                cubit.allProduct?['data']['products'][index]
+                                        ['id']
+                                    .toString(),
+                                cubit.allProduct?['data']['products'][index]
+                                    ['id']);
+                          },
+                          add: () {},
+                          isFavorites: cubit.isfavorite[cubit
+                              .allProduct?['data']['products'][index]['id']]!,
                         );
                       },
                     ),

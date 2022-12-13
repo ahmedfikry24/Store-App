@@ -9,6 +9,5 @@ class AppLinks {
 
   static const String getAllCategories = '${baseUrl}categories';
 
-  static const String getAllProductsByCategory =
-      '${baseUrl}products/categories/';
+  static const String addFavorites = '${baseUrl}favorites';
 }

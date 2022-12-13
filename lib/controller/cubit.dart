@@ -17,7 +17,9 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
   Crud crud = Crud();
   Map<String, dynamic>? allProduct;
   Map<String, dynamic>? allCategories;
-
+  Map<String, dynamic>? addfavorites;
+  Map<String, dynamic>? getfavorites;
+  Map<int, bool> isfavorite = {};
   int currentIndex = 0;
   List<BottomNavigationBarItem> items = [
     const BottomNavigationBarItem(
@@ -49,6 +51,8 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
     currentIndex = val;
     if (val == 2 && allCategories == null) {
       getCategories();
+    } else if (val == 1 && getfavorites == null) {
+      getFavorites();
     }
     emit(StoreAppChangeBNBState());
   }
@@ -59,6 +63,9 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
         await crud.getData(url: AppLinks.getAllProducts, token: Services.token);
     if (response is Map<String, dynamic>) {
       allProduct = response;
+      allProduct?['data']['products'].forEach((element) {
+        isfavorite.addAll({element['id']: element['in_favorites']});
+      });
       emit(StoreAppGetAllProductSuccessState());
     } else {
       emit(StoreAppGetAllProductErrorState());
@@ -73,6 +80,49 @@ class StoreAppCubit extends Cubit<StoreAppStates> {
       emit(StoreAppGetCategoriesSuccessState());
     } else {
       emit(StoreAppGetCategoriesErrorState());
+    }
+  }
+
+  addFavorites(String? id, int idis) async {
+    isfavorite[idis] = !isfavorite[idis]!;
+    emit(StoreAppAddFavoritesLoadingState());
+    var response = await crud.postData(
+      url: AppLinks.addFavorites,
+      data: {
+        'product_id': id,
+      },
+      token: Services.token,
+    );
+    if (response is Map<String, dynamic>) {
+      if (response['status'] == true) {
+        addfavorites = response;
+        if (getfavorites != null) {
+          getFavorites();
+        }
+        emit(StoreAppAddFavoritesSuccessState());
+      } else {
+        isfavorite[idis] = !isfavorite[idis]!;
+        emit(StoreAppAddFavoritesErrorState());
+      }
+    } else {
+      isfavorite[idis] = !isfavorite[idis]!;
+      emit(StoreAppAddFavoritesErrorState());
+    }
+  }
+
+  getFavorites() async {
+    emit(StoreAppGetFavoritesLoadingState());
+    var response =
+        await crud.getData(url: AppLinks.addFavorites, token: Services.token);
+    if (response is Map<String, dynamic>) {
+      if (response['status'] == true) {
+        getfavorites = response;
+        emit(StoreAppGetFavoritesSuccessState());
+      } else {
+        emit(StoreAppGetFavoritesErrorState());
+      }
+    } else {
+      emit(StoreAppGetFavoritesErrorState());
     }
   }
 }

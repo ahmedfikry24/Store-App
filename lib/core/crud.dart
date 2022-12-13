@@ -24,11 +24,12 @@ class Crud {
     }
   }
 
-  Future<Map<String, dynamic>> postData(String url, Map data) async {
+  Future<Map<String, dynamic>> postData(
+      {required String url, required Map data, String? token}) async {
     http.Response response =
         await http.post(Uri.parse(url), body: data, headers: {
-      'Content-Type': 'application/json',
       'lang': 'en',
+      'Authorization': token!,
     });
     if (response.statusCode == 200 || response.statusCode == 201) {
       Map<String, dynamic> responsebody = jsonDecode(response.body);
