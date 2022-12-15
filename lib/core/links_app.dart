@@ -14,4 +14,6 @@ class AppLinks {
   static const String getuserinfo = '${baseUrl}profile';
 
   static const String updateprofile = '${baseUrl}update-profile';
+
+  static const String addcart = '${baseUrl}carts';
 }

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/controller/cubit.dart';
 import 'package:store_app/controller/states.dart';
-import 'package:store_app/view/widgets/favorite_product_item.dart';
+import 'package:store_app/view/widgets/cart_product_item.dart';
 
-class FavoritesScreen extends StatelessWidget {
-  const FavoritesScreen({super.key});
+class CartScreen extends StatelessWidget {
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,29 +13,29 @@ class FavoritesScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         StoreAppCubit cubit = StoreAppCubit.get(context);
-        return cubit.getfavorites != null
+        return cubit.getcart != null
             ? ListView.separated(
                 padding: const EdgeInsets.all(10),
-                itemCount: cubit.getfavorites?['data']['data'].length,
+                itemCount: cubit.getcart?['data']['cart_items'].length,
                 separatorBuilder: (context, index) => Container(
                   height: 1,
                   color: Colors.grey,
                   margin:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 ),
-                itemBuilder: (context, index) => CustomFavoriteProductItem(
-                  getfavorites: cubit.getfavorites!,
+                itemBuilder: (context, index) => CustomCartProductItem(
+                  getcart: cubit.getcart!,
                   index: index,
-                  isFavorites: cubit.isfavorite[cubit.getfavorites?['data']
-                      ['data'][index]['product']['id']]!,
-                  favorites: () async {
-                    await cubit.addFavorites(
-                        cubit.getfavorites?['data']['data'][index]['product']
+                  iscart: cubit.iscart[cubit.getcart?['data']['cart_items']
+                      [index]['product']['id']]!,
+                  add: () async {
+                    await cubit.addCart(
+                        cubit.getcart?['data']['cart_items'][index]['product']
                                 ['id']
                             .toString(),
-                        cubit.getfavorites?['data']['data'][index]['product']
+                        cubit.getcart?['data']['cart_items'][index]['product']
                             ['id']);
-                    cubit.getFavorites();
+                    cubit.getCart();
                   },
                 ),
               )

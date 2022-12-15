@@ -4,6 +4,7 @@ class CustomProductItem extends StatelessWidget {
   final Map<String, dynamic> allProducts;
   final int index;
   final bool isFavorites;
+  final bool iscart;
   final void Function()? favorites;
   final void Function()? add;
   const CustomProductItem(
@@ -12,7 +13,8 @@ class CustomProductItem extends StatelessWidget {
       required this.index,
       this.favorites,
       this.add,
-      required this.isFavorites});
+      required this.isFavorites,
+      required this.iscart});
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +83,7 @@ class CustomProductItem extends StatelessWidget {
               IconButton(
                   onPressed: add,
                   icon: Icon(
-                    Icons.add,
+                    iscart == true ? Icons.check_circle_sharp : Icons.add,
                     color: Colors.blue[800],
                   ))
             ],

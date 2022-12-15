@@ -75,9 +75,18 @@ class AllProductsScreen extends StatelessWidget {
                                 cubit.allProduct?['data']['products'][index]
                                     ['id']);
                           },
-                          add: () {},
+                          add: () {
+                            cubit.addCart(
+                                cubit.allProduct?['data']['products'][index]
+                                        ['id']
+                                    .toString(),
+                                cubit.allProduct?['data']['products'][index]
+                                    ['id']);
+                          },
                           isFavorites: cubit.isfavorite[cubit
                               .allProduct?['data']['products'][index]['id']]!,
+                          iscart: cubit.iscart[cubit.allProduct?['data']
+                              ['products'][index]['id']]!,
                         );
                       },
                     ),

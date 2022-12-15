@@ -1,9 +1,15 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:store_app/controller/cubit.dart';
 import 'package:store_app/controller/states.dart';
 import 'package:store_app/core/themes.dart';
+import 'package:store_app/services/services.dart';
+import 'package:store_app/view/screens/categories.dart';
+import 'package:store_app/view/screens/login.dart';
 import 'package:store_app/view/screens/profile.dart';
 import 'package:store_app/view/screens/settings.dart';
 
@@ -20,16 +26,6 @@ class HomeScreen extends StatelessWidget {
           appBar: AppBar(
             iconTheme: const IconThemeData(color: Colors.black54),
             elevation: 0,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      FontAwesomeIcons.cartShopping,
-                    )),
-              ),
-            ],
             backgroundColor: Colors.white54,
             centerTitle: true,
             title: Text(cubit.titles[cubit.currentIndex],
@@ -47,6 +43,18 @@ class HomeScreen extends StatelessWidget {
                         child:
                             Image.network(cubit.getuserinfo?['data']['image']),
                       ),
+                    ),
+                    ListTile(
+                      title: const Text('categories'),
+                      leading: const Icon(FontAwesomeIcons.list),
+                      onTap: () {
+                        cubit.getCategories();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const CategoriesScreen(),
+                            ));
+                      },
                     ),
                     ListTile(
                       title: const Text('profile'),
@@ -73,15 +81,22 @@ class HomeScreen extends StatelessWidget {
                     ListTile(
                       title: const Text('logout'),
                       leading: const Icon(Icons.logout_outlined),
-                      onTap: () {},
+                      onTap: () async {
+                        await sharedPreferences?.remove('token');
+                        await sharedPreferences?.remove('homepage');
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const Login(),
+                            ),
+                            (route) => false);
+                      },
                     ),
                   ]),
                 )
               : const SizedBox.shrink(),
-          bottomNavigationBar: BottomNavigationBar(
+          bottomNavigationBar: CurvedNavigationBar(
             items: cubit.items,
-            currentIndex: cubit.currentIndex,
-            elevation: 5,
+            index: cubit.currentIndex,
             onTap: (val) {
               cubit.changeBNB(val);
             },

@@ -39,3 +39,15 @@ class StoreAppUpdateProfileLoadingState extends StoreAppStates {}
 class StoreAppUpdateProfileSuccessState extends StoreAppStates {}
 
 class StoreAppUpdateProfileErrorState extends StoreAppStates {}
+
+class StoreAppAddCartLoadingState extends StoreAppStates {}
+
+class StoreAppAddCartSuccessState extends StoreAppStates {}
+
+class StoreAppAddCartErrorState extends StoreAppStates {}
+
+class StoreAppGetCartLoadingState extends StoreAppStates {}
+
+class StoreAppGetCartSuccessState extends StoreAppStates {}
+
+class StoreAppGetCartErrorState extends StoreAppStates {}

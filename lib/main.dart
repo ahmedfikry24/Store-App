@@ -16,7 +16,6 @@ void main() async {
   await Services().getInit();
   Services.onboarding = await sharedPreferences!.getBool('onboarding');
   Services.homepage = await sharedPreferences!.getBool('homepage');
-  Services.email = await sharedPreferences!.getString('email');
   Services.token = await sharedPreferences!.getString('token');
   Widget widget = const OnBoardingScreen();
   if (Services.onboarding != null && Services.onboarding == true) {
