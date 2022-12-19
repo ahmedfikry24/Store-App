@@ -51,45 +51,41 @@ class AllProductsScreen extends StatelessWidget {
                           ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: GridView.builder(
-                      itemCount: cubit.allProduct?['data']['products'].length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 10,
-                        childAspectRatio: .95,
-                      ),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return CustomProductItem(
-                          allProducts: cubit.allProduct!,
-                          index: index,
-                          favorites: () {
-                            cubit.addFavorites(
-                                cubit.allProduct?['data']['products'][index]
-                                        ['id']
-                                    .toString(),
-                                cubit.allProduct?['data']['products'][index]
-                                    ['id']);
-                          },
-                          add: () {
-                            cubit.addCart(
-                                cubit.allProduct?['data']['products'][index]
-                                        ['id']
-                                    .toString(),
-                                cubit.allProduct?['data']['products'][index]
-                                    ['id']);
-                          },
-                          isFavorites: cubit.isfavorite[cubit
-                              .allProduct?['data']['products'][index]['id']]!,
-                          iscart: cubit.iscart[cubit.allProduct?['data']
-                              ['products'][index]['id']]!,
-                        );
-                      },
+                  GridView.builder(
+                    itemCount: cubit.allProduct?['data']['products'].length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
                     ),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(10),
+                    itemBuilder: (context, index) {
+                      return CustomProductItem(
+                        allProducts: cubit.allProduct!,
+                        index: index,
+                        favorites: () {
+                          cubit.addFavorites(
+                              cubit.allProduct?['data']['products'][index]['id']
+                                  .toString(),
+                              cubit.allProduct?['data']['products'][index]
+                                  ['id']);
+                        },
+                        add: () {
+                          cubit.addCart(
+                              cubit.allProduct?['data']['products'][index]['id']
+                                  .toString(),
+                              cubit.allProduct?['data']['products'][index]
+                                  ['id']);
+                        },
+                        isFavorites: cubit.isfavorite[cubit.allProduct?['data']
+                            ['products'][index]['id']]!,
+                        iscart: cubit.iscart[cubit.allProduct?['data']
+                            ['products'][index]['id']]!,
+                      );
+                    },
                   ),
                 ],
               )

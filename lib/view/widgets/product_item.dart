@@ -27,8 +27,8 @@ class CustomProductItem extends StatelessWidget {
             children: [
               Image.network(
                 allProducts['data']['products'][index]['image'],
-                height: 150,
-                width: 150,
+                height: 118,
+                width: 118,
                 fit: BoxFit.fill,
               ),
               if (allProducts['data']['products'][index]['old_price'] !=

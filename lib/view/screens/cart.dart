@@ -14,30 +14,63 @@ class CartScreen extends StatelessWidget {
       builder: (context, state) {
         StoreAppCubit cubit = StoreAppCubit.get(context);
         return cubit.getcart != null
-            ? ListView.separated(
-                padding: const EdgeInsets.all(10),
-                itemCount: cubit.getcart?['data']['cart_items'].length,
-                separatorBuilder: (context, index) => Container(
-                  height: 1,
-                  color: Colors.grey,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                ),
-                itemBuilder: (context, index) => CustomCartProductItem(
-                  getcart: cubit.getcart!,
-                  index: index,
-                  iscart: cubit.iscart[cubit.getcart?['data']['cart_items']
-                      [index]['product']['id']]!,
-                  add: () async {
-                    await cubit.addCart(
-                        cubit.getcart?['data']['cart_items'][index]['product']
-                                ['id']
-                            .toString(),
-                        cubit.getcart?['data']['cart_items'][index]['product']
-                            ['id']);
-                    cubit.getCart();
-                  },
-                ),
+            ? ListView(
+                children: [
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(10),
+                    itemCount: cubit.getcart?['data']['cart_items'].length,
+                    separatorBuilder: (context, index) => Container(
+                      height: 1,
+                      color: Colors.grey,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 10),
+                    ),
+                    itemBuilder: (context, index) => CustomCartProductItem(
+                      getcart: cubit.getcart!,
+                      index: index,
+                      iscart: cubit.iscart[cubit.getcart?['data']['cart_items']
+                          [index]['product']['id']]!,
+                      add: () async {
+                        await cubit.addCart(
+                            cubit.getcart?['data']['cart_items'][index]
+                                    ['product']['id']
+                                .toString(),
+                            cubit.getcart?['data']['cart_items'][index]
+                                ['product']['id']);
+                        cubit.getCart();
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        const Text(
+                          'Total Cart :',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 32,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          '\$ ${cubit.getcart?['data']['total']}',
+                          style: const TextStyle(
+                            fontSize: 24,
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                ],
               )
             : const Center(
                 child: CircularProgressIndicator(),
